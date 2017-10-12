@@ -21,7 +21,7 @@ namespace CoreMailerExample.Controllers
             _mailer = mailer;
         }
         // GET: /<controller>/
-        public IActionResult Index(bool v = false)
+        public IActionResult Index(bool v = false) 
         {
             MailerModel mdl = new MailerModel("Host address", 1234)//Host name and port number
             {
