@@ -28,8 +28,8 @@ in the controller use following:
 
 **Constructor**
 
-    private readonly ICoreMailer _mailer;
-    public HomeController(ICoreMailer mailer)
+    private readonly ICoreMvcMailer _mailer;
+    public HomeController(ICoreMvcMailer mailer)
     {
       _mailer = mailer;
     }
