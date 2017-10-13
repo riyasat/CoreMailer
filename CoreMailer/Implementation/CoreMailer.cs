@@ -46,13 +46,37 @@ namespace CoreMailer.Implementation
                     
 
                     var emailMessage =
-                        new MailMessage(mailer.FromAddress, mailer.To, mailer.Subject, messageBody)
+                        new MailMessage()
                         {
+                            From = new MailAddress(mailer.FromAddress),
                             IsBodyHtml = mailer.IsHtml,
-                            Subject = mailer.Subject
+                            Subject = mailer.Subject,
+                            Body = messageBody
                         };
 
+                    foreach (var toAddress in mailer.ToAddresses){
+                        emailMessage.To.Add(toAddress);
+                    }
 
+                    foreach (var replyTo in mailer.ReplyTo)
+                    {
+                        emailMessage.ReplyToList.Add(replyTo);
+                    }
+
+                    foreach (var attachment in mailer.Attachments)
+                    {
+                        emailMessage.Attachments.Add(attachment);
+                    }
+
+                    foreach (var ccAddress in mailer.CC)
+                    {
+                        emailMessage.CC.Add(ccAddress);
+                    }
+
+                    foreach (var bccAddress in mailer.BCC)
+                    {
+                        emailMessage.Bcc.Add(bccAddress);
+                    }
                     _client.Host = mailer.Host;
                     _client.Port = mailer.Port;
                     _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);

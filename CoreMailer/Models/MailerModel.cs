@@ -30,9 +30,14 @@ namespace CoreMailer.Models
         public string Subject { get; set; }
         public string ViewFile { get; set; }
 
-        public bool HasViewName => ViewFile.Length > 0;
+        public bool HasViewName => !string.IsNullOrEmpty(ViewFile);
 
         public string Message { get; set; }
+
+        public List<Attachment> Attachments { get; set; }
+        public List<string> ReplyTo { get; set; }
+        public List<string> CC { get; set; }
+        public List<string> BCC { get; set; }
 
         public Object Model { get; set; }
         public MailerModel(string host, int port)
@@ -40,6 +45,10 @@ namespace CoreMailer.Models
             Host = host;
             Port = port;
             ToAddresses = new List<string>();
+            Attachments = new List<Attachment>();
+            ReplyTo = new List<string>();
+            CC = new List<string>();
+            BCC = new List<string>();
 
         }
 
