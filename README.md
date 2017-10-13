@@ -44,7 +44,7 @@ in the controller use following:
                 IsHtml = true,
                 User = "YourUserName",
                 Key ="YourKey",
-                ViewFile = "Emails/Register.cshtml",
+                ViewFile = "Emails/Register",
                 Subject = "Registration",
                 Model = new // Your actual class model
                 {
