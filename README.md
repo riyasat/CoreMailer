@@ -11,7 +11,7 @@ How to Use:
 **In Startup.cs add**
 
     services.AddScoped<ITemplateRenderer, TemplateRenderer>();
-    services.AddScoped<ICoreMailer, CoreMailer.Implementation.CoreMailer>();
+    services.AddScoped<ICoreMailer, CoreMvcMailer>();
 
 Create cshtml template under any views folder e.g.
 
