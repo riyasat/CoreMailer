@@ -7,7 +7,7 @@ using CoreMailer.Models;
 
 namespace CoreMailer.Implementation
 {
-    public class CoreMvcMailer : ICoreMailer
+    public class CoreMvcMailer : ICoreMvcMailer
     {
         private readonly ITemplateRenderer _renderer;
 

@@ -14,12 +14,14 @@ namespace CoreMailerExample.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICoreMailer _mailer;
+        private readonly ICoreMvcMailer _mailer;
+	    private readonly ITemplateRenderer _render;
 
-        public HomeController(ICoreMailer mailer)
-        {
-            _mailer = mailer;
-        }
+	    public HomeController(ICoreMvcMailer mailer,ITemplateRenderer render)
+	    {
+		    _mailer = mailer;
+		    _render = render;
+	    }
         // GET: /<controller>/
         public IActionResult Index(bool v = false) 
         {
@@ -32,7 +34,16 @@ namespace CoreMailerExample.Controllers
             };
             mdl.ToAddresses.Add("receiver email"); // add receiver as many as you want
 
-            if (v)
+			var view = _render.RenderView("Home/email_view", mdl.Model = new UserModel
+			{
+				OrganizationName = "Test Organization"
+			});
+	        var viewHtml = _render.RenderViewToHtml("Home/email_view", mdl.Model = new UserModel
+	        {
+		        OrganizationName = "Test Organization"
+	        });
+
+			if (v)
             {
                 mdl.ViewFile = "Home/email_view";
                 mdl.Model = new UserModel

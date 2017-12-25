@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using CoreMailer.Interfaces;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -76,5 +77,9 @@ namespace CoreMailer.Implementation
         {
             return RenderViewAsync(name, model).Result;
         }
-    }
+	    public HtmlString RenderViewToHtml<TModel>(string name, TModel model)
+	    {
+		    return new HtmlString(RenderViewAsync(name, model).Result);
+	    }
+	}
 }

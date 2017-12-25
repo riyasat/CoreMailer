@@ -6,7 +6,7 @@ using CoreMailer.Models;
 
 namespace CoreMailer.Interfaces
 {
-    public interface ICoreMailer
+    public interface ICoreMvcMailer
     {
         void Send(MailerModel model);
         Task SendAsyn(MailerModel model);
