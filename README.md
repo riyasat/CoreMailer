@@ -53,4 +53,27 @@ in the controller use following:
             
             _mailer.Send(mdl);
             return View();
-        }
+        
+
+**UPDATE 2018-01-04**
+
+Added support to use local folder instead of using paid or free mail servers.
+
+**HOW TO USE ?**
+
+It is really simple to use. Just create MVCMailer model with **pickup directory location**. When you send the email make sure you set sender and reciver email. Once done, you can see email in your provided pickup directory.
+
+            MailerModel mdl = new MailerModel(**"Your Directory Here"**)
+            {
+                FromAddress = "Your Address",
+                IsHtml = true,
+                User = "YourUserName",
+                Key ="YourKey",
+                ViewFile = "Emails/Register",
+                Subject = "Registration",
+                Model = new // Your actual class model
+                {
+                }
+            };
+            mdl.ToAddresses.Add("test@test.com");
+            _mailer.Send(mdl);
