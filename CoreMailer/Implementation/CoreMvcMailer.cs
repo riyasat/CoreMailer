@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -73,9 +74,24 @@ namespace CoreMailer.Implementation
                 {
                     emailMessage.Bcc.Add(bccAddress);
                 }
-                _client.Host = mailer.Host;
-                _client.Port = mailer.Port;
-                _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);
+
+	            if (mailer.UsePickupDirectory)
+	            {
+		            _client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+		            if (!Directory.Exists(mailer.PickupPath))
+		            {
+			            Directory.CreateDirectory(mailer.PickupPath);
+		            }
+		            _client.PickupDirectoryLocation = mailer.PickupPath;
+	            }
+	            else
+	            {
+					_client.Host = mailer.Host;
+		            _client.Port = mailer.Port;
+		            _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);
+				}
+
+                
 
                 _client.Send(emailMessage);
 
