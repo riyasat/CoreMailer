@@ -18,7 +18,8 @@ namespace CoreMailer.Models
 		public string User { get; set; }
 		[Required(ErrorMessage = "Key / password for host user is Required")]
 		public string Key { get; set; }
-		public bool IsHtml { get; set; }
+        public bool EnableSsl { get; set; }
+        public bool IsHtml { get; set; }
 		[Required(ErrorMessage = "Sender email address is required")]
 		[EmailAddress(ErrorMessage = "Please enter valid sender email")]
 		public string FromAddress { get; set; }
@@ -48,7 +49,8 @@ namespace CoreMailer.Models
 		{
 			Host = host;
 			Port = port;
-			ToAddresses = new List<string>();
+            EnableSsl = false;
+            ToAddresses = new List<string>();
 			Attachments = new List<Attachment>();
 			ReplyTo = new List<string>();
 			CC = new List<string>();
