@@ -100,7 +100,7 @@ namespace CoreMailer.Implementation
         }
 
 
-        public async Task SendAsyn(MailerModel mailer)
+        public async Task SendAsync(MailerModel mailer)
         {
             await Task.Run(() =>
             {

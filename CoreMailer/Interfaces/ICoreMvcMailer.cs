@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CoreMailer.Models;
 
 namespace CoreMailer.Interfaces
@@ -9,6 +6,6 @@ namespace CoreMailer.Interfaces
     public interface ICoreMvcMailer
     {
         void Send(MailerModel model);
-        Task SendAsyn(MailerModel model);
+        Task SendAsync(MailerModel model);
     }
 }

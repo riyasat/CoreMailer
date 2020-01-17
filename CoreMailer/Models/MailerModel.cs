@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Text;
 
 namespace CoreMailer.Models
 {
-	public class MailerModel
+    public class MailerModel
 	{
 		[Required(ErrorMessage = "Host Name is Required")]
 		public string Host { get; set; }

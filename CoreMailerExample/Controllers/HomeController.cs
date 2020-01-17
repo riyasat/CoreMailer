@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CoreMailer.Interfaces;
+﻿using CoreMailer.Interfaces;
 using CoreMailer.Models;
 using CoreMailerExample.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreMailerExample.Controllers
 {
-	public class HomeController : Controller
+    public class HomeController : Controller
 	{
 		private readonly ICoreMvcMailer _mailer;
 		private readonly ITemplateRenderer _render;
