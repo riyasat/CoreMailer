@@ -20,7 +20,7 @@ namespace CoreMailerExample.Controllers
 
 		public IActionResult SendToFolder()
 		{
-			MailerModel mdl = new MailerModel("E:\\Home\\emailPickup")//Host name and port number
+			MailerModel mdl = new MailerModel("C:\\Temp\\emailPickup")//Host name and port number
 			{
 				User = "Your User Name",
 				Key = "Your Key",
