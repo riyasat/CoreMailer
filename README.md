@@ -12,7 +12,8 @@ How to Use:
 
     services.AddScoped<ITemplateRenderer, TemplateRenderer>();
     services.AddScoped<ICoreMvcMailer, CoreMvcMailer>();
-
+    services.AddRazorPages();
+    
 Create cshtml template under any views folder e.g.
 
     Views/Emails/Registration.cshtml
