@@ -1,12 +1,12 @@
 # CoreMailer
 
-Send email from .NET Core 2.0 with razor template Check the exmple code for details :) happy coding
+Send email from .NET Core 3.0 with razor template Check the exmple code for details :) happy coding
 
 How to Use:
 
 **To Install**
 
-    npm install CoreMailer -Version 1.0.0
+    npm install CoreMailer -Version 2.1.0
 
 **In Startup.cs add**
 
