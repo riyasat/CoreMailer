@@ -88,8 +88,7 @@ namespace CoreMailer.Implementation
 	            {
 					_client.Host = mailer.Host;
 		            _client.Port = mailer.Port;
-                    _client.EnableSsl = mailer.EnableSsl;
-                    _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);
+		            _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);
 				}
 
                 
