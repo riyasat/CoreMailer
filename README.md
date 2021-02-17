@@ -1,5 +1,6 @@
 
 # CoreMailer
+**CoreMailer has been updated to .NET Core 3.1 and doesn't required Razor View renderer**
 
 Send email from .NET Core 3.1 with model binding email template Check the exmple code for details :) happy coding.
 
