@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CoreMailer.Implementation;
 using CoreMailer.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +5,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CoreMailer.Implementation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoreMailerExample
 {
@@ -25,8 +25,7 @@ namespace CoreMailerExample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICoreMvcMailer, CoreMvcMailer>();
-            services.AddScoped<ITemplateRenderer, TemplateRenderer>();
+            services.AddScoped<ICoreMvcMailer,CoreMvcMailer>();
             services.AddControllersWithViews();
         }
 

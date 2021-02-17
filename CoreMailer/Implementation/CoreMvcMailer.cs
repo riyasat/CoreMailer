@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CoreMailer.Extensions;
 using CoreMailer.Interfaces;
 using CoreMailer.Models;
 
 namespace CoreMailer.Implementation
 {
-    public class CoreMvcMailer : ICoreMvcMailer
+    public class CoreMvcMailer:ICoreMvcMailer
     {
-        private readonly ITemplateRenderer _renderer;
-
         private readonly SmtpClient _client;
 
-        public CoreMvcMailer(ITemplateRenderer renderer)
+        public CoreMvcMailer()
         {
-            _renderer = renderer;
             _client = new SmtpClient();
         }
-
         public void Send(MailerModel mailer)
         {
             if (mailer == null)
@@ -29,19 +30,17 @@ namespace CoreMailer.Implementation
 
             if (mailer.IsValid())
             {
-                string messageBody;
-                if (_renderer != null)
+                var messageBody = "";
+                if (mailer.HasLayout)
                 {
-                    messageBody = mailer.HasViewName
-                        ? _renderer.RenderView(mailer.ViewFile, mailer.Model)
-                        : mailer.Message;
+                    messageBody = mailer.Layout.GetLayout();
                 }
-                else
-                {
-                    messageBody = mailer.Message;
-                }
-                    
 
+                if (mailer.HasViewName)
+                {
+                    var emailContent = mailer.Model.GetEmailContent(mailer.ViewFile);
+                    messageBody = Regex.Replace(messageBody, @"(?<![\w]){EMAILCONTENT}(?![\w])", emailContent ?? "");
+                }
                 var emailMessage =
                     new MailMessage()
                     {
@@ -51,7 +50,8 @@ namespace CoreMailer.Implementation
                         Body = messageBody
                     };
 
-                foreach (var toAddress in mailer.ToAddresses){
+                foreach (var toAddress in mailer.ToAddresses)
+                {
                     emailMessage.To.Add(toAddress);
                 }
 
@@ -75,24 +75,21 @@ namespace CoreMailer.Implementation
                     emailMessage.Bcc.Add(bccAddress);
                 }
 
-	            if (mailer.UsePickupDirectory)
-	            {
-		            _client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-		            if (!Directory.Exists(mailer.PickupPath))
-		            {
-			            Directory.CreateDirectory(mailer.PickupPath);
-		            }
-		            _client.PickupDirectoryLocation = mailer.PickupPath;
-	            }
-	            else
-	            {
-					_client.Host = mailer.Host;
-		            _client.Port = mailer.Port;
-		            _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);
-				}
-
-                
-
+                if (mailer.UsePickupDirectory)
+                {
+                    _client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                    if (!Directory.Exists(mailer.PickupPath))
+                    {
+                        Directory.CreateDirectory(mailer.PickupPath);
+                    }
+                    _client.PickupDirectoryLocation = mailer.PickupPath;
+                }
+                else
+                {
+                    _client.Host = mailer.Host;
+                    _client.Port = mailer.Port;
+                    _client.Credentials = new NetworkCredential(mailer.User, mailer.Key);
+                }
                 _client.Send(emailMessage);
 
             }

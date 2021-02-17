@@ -1,10 +1,10 @@
 ﻿{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:63512",
-      "sslPort": 44323
+      "applicationUrl": "http://localhost:51990",
+      "sslPort": 44303
     }
   },
   "profiles": {
@@ -17,6 +17,7 @@
     },
     "CoreMailerExample": {
       "commandName": "Project",
+      "dotnetRunMessages": "true",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {

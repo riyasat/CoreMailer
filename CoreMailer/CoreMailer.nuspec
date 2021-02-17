@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>Riy.CoreMailer</id>
-    <version>1.1.0</version>
+    <version>3.0.0</version>
     <authors>Riyasat</authors>
-    <owners>Riyasat</owners>
+    <owners>Riy Technologies AB</owners>
     <projectUrl>http://www.github.com/riyasat/CoreMailer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Send Emails from .NET Core 1.0 or Above With Razor View Templates</description>
-    <releaseNotes>This is just a small project to send emails from within ASPNET.Core with razor tempalte. See the exmaple project for details</releaseNotes>
+    <description>Send Emails from .NET Core 5.0 or Above With Email Templates</description>
+    <releaseNotes>This is just a small project to send emails from within ASPNET.Core. See the exmaple project for details</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>ASPNET.Core Mailer MVC mailer mailer .NETCoreMailer EmailSender</tags>
   </metadata>
