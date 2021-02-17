@@ -15,7 +15,7 @@ namespace CoreMailer.Extensions
         {
             var content = new StringBuilder();
 
-            var fileWithPath =  Path.GetFullPath(fileName);
+            var fileWithPath = Path.GetFullPath(fileName);
             try
             {
                 using var htmlReader = new StreamReader(fileWithPath);
@@ -33,7 +33,7 @@ namespace CoreMailer.Extensions
 
             return content.ToString();
         }
-        public static string GetEmailContent<T>(this T model, string fileName) where T : class
+        public static string GetHtmlEmailContent<T>(this T model, string fileName) where T : class
         {
             var content = new StringBuilder();
             var modelType = model.GetType();
@@ -55,6 +55,34 @@ namespace CoreMailer.Extensions
                     }
                     content.Append(lineStr);
                 }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+
+            return content.ToString();
+        }
+        public static string GetTextEmailContent<T>(this T model, string message) where T : class
+        {
+            var content = new StringBuilder();
+            var modelType = model.GetType();
+            var properties = modelType.GetProperties().Where(x => (x.MemberType & MemberTypes.Property) != 0)
+                .Select(x => x.Name).ToList();
+            try
+            {
+                var _message = message;
+
+
+                foreach (var property in properties)
+                {
+                    var value = modelType.GetProperty(property)?.GetValue(model)?.ToString();
+                    _message = Regex.Replace(_message, @"(?<![\w]){" + property + @"}(?![\w])", value ?? "");
+                }
+
+                content.Append(_message);
+
             }
             catch (Exception e)
             {

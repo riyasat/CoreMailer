@@ -25,15 +25,30 @@ namespace CoreMailerExample.Controllers
 
         public IActionResult Index()
         {
-            MailerModel mdl = new MailerModel("d:\\others\\ES_Emails",@"Views\Email\_EmailLayout.html")//Host name and port number
+            //MailerModel mdl = new MailerModel("d:\\others\\ES_Emails",@"Views\Email\_EmailLayout.html")//Host name and port number
+            //{
+            //    User = "Your User Name",
+            //    Key = "Your Key",
+            //    FromAddress = "localhost@localhost.local",// someone@something.com
+            //    IsHtml = true,
+            //    ViewFile = @"Views\Email\EmailContent.html"
+            //};
+            MailerModel mdl = new MailerModel
             {
                 User = "Your User Name",
                 Key = "Your Key",
                 FromAddress = "localhost@localhost.local",// someone@something.com
-                IsHtml = true,
-                ViewFile = @"Views\Email\EmailContent.html"
+                IsHtml = false,
+                PickupPath = "d:\\others\\ES_Emails",
+                UsePickupDirectory = true,
+                Message = "Hi {UserName},"+Environment.NewLine+
+                          $"This is test email {Environment.NewLine}" +
+                          $"Regards, {Environment.NewLine}" +
+                          "{OrganizationName}"
+
+
             };
-            
+
             mdl.Model = new UserModel
             {
                 UserName = "Riyasat",

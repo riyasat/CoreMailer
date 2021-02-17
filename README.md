@@ -1,27 +1,48 @@
+
 # CoreMailer
 
-Send email from .NET Core 3.0 with razor template Check the exmple code for details :) happy coding
+Send email from .NET Core 3.1 with model binding email template Check the exmple code for details :) happy coding.
 
-How to Use:
+*How to Use:*
 
 **To Install**
 
-    npm install CoreMailer -Version 2.1.0
+    npm install CoreMailer -Version 3.0.0
 
 **In Startup.cs add**
 
-    services.AddScoped<ITemplateRenderer, TemplateRenderer>();
     services.AddScoped<ICoreMvcMailer, CoreMvcMailer>();
     services.AddRazorPages();
     
-Create cshtml template under any views folder e.g.
+Create html template under any views folder e.g. ***Notice extension of file***
 
-    Views/Emails/Registration.cshtml
+    Views/Emails/_EmailLayout.html
+    Views/Emails/EmailContent.html
+**The Layout Content Must be in HTML (If you have it)**
+HTML Layout **or** Message body  must have parameter **{EMAILCONTENT}** present where you want to insert your email content. **e.g.**
 
-**The content of cshtml can be**
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+        <style type="text/css">
+            a[x-apple-data-detectors] {
+                color: inherit !important;
+            }
+        </style>
+    </head>
+    <body style="margin: 0; padding: 0;">
+       {EMAILCONTENT}
+    </body>
+    </html>
 
-    @model UserInfo
-    Hello <strong>@Model.UserName</strong> you are <strong>Awxam</strong>
+**The content must be in HTML (If you have it)** *OR* **Message Body** with parameter name like **{PARAMETERNAME}** 
+
+For example: UserModel has property UserName you should mention that as **{UserName}** within email content
+
+    Hello <strong>{UserName}</strong> you are <strong>Awxam</strong> Regards, {OrganizationName}
 
 **NOTE: For emails you have to use inline styling.**
 
@@ -37,47 +58,58 @@ in the controller use following:
 
 **ActionMethod**
 
-    public IActionResult About()
+*HTML Content With Layou and Pickupdirectory*
+
+    public IActionResult Index()
         {
-            MailerModel mdl = new MailerModel("YourHostName",1234)
+	        MailerModel mdl = new MailerModel("d:\\others\\ES_Emails", @"Views\Email\_EmailLayout.html")//Host name and port number
             {
-                FromAddress = "Your Address",
+                User = "Your User Name",
+                Key = "Your Key",
+                FromAddress = "localhost@localhost.local",// someone@something.com
                 IsHtml = true,
-                User = "YourUserName",
-                Key ="YourKey",
-                ViewFile = "Emails/Register",
-                Subject = "Registration",
-                Model = new // Your actual class model
-                {
-                }
+                ViewFile = @"Views\Email\EmailContent.html"
             };
-            
-            _mailer.Send(mdl);
-            return View();
-        
-
-**UPDATE 2018-01-04**
-
-Added support to use local folder instead of using paid or free mail servers.
-
-**HOW TO USE ?**
-
-It is really simple to use. Just create MVCMailer model with **pickup directory location**. When you send the email make sure you set sender and reciver email. Once done, you can see email in your provided pickup directory.
-
-            MailerModel mdl = new MailerModel(**"Your Directory Here"**)
+             mdl.Model = new UserModel
             {
-                FromAddress = "Your Address",
-                IsHtml = true,
-                User = "YourUserName",
-                Key ="YourKey",
-                ViewFile = "Emails/Register",
-                Subject = "Registration",
-                Model = new // Your actual class model
-                {
-                }
+                UserName = "Riyasat",
+                OrganizationName = "Riy Technologies AB"
             };
             mdl.ToAddresses.Add("test@test.com");
-            _mailer.Send(mdl);
+            _coreMailer.Send(mdl);
+      }  
+
+*Text Content With Layou and Pickupdirectory*
+
+    public IActionResult Index()
+    {
+
+            MailerModel mdl = new MailerModel
+            {
+                User = "Your User Name",
+                Key = "Your Key",
+                FromAddress = "localhost@localhost.local",// someone@something.com
+                IsHtml = false,
+                PickupPath = "d:\\others\\ES_Emails",
+                UsePickupDirectory = true,
+                Message = "Hi {UserName},"+Environment.NewLine+
+                          $"This is test email {Environment.NewLine}" +
+                          $"Regards, {Environment.NewLine}" +
+                          "{OrganizationName}"
+
+
+            };
+
+            mdl.Model = new UserModel
+            {
+                UserName = "Riyasat",
+                OrganizationName = "Riy Technologies AB"
+            };
+            mdl.ToAddresses.Add("test@test.com");
+            _coreMailer.Send(mdl);
+            return View();
+     }
+
 
 **LICENSE**
 

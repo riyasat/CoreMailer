@@ -13,7 +13,7 @@ using CoreMailer.Models;
 
 namespace CoreMailer.Implementation
 {
-    public class CoreMvcMailer:ICoreMvcMailer
+    public class CoreMvcMailer : ICoreMvcMailer
     {
         private readonly SmtpClient _client;
 
@@ -36,10 +36,23 @@ namespace CoreMailer.Implementation
                     messageBody = mailer.Layout.GetLayout();
                 }
 
-                if (mailer.HasViewName)
+                if (mailer.IsHtml)
                 {
-                    var emailContent = mailer.Model.GetEmailContent(mailer.ViewFile);
-                    messageBody = Regex.Replace(messageBody, @"(?<![\w]){EMAILCONTENT}(?![\w])", emailContent ?? "");
+                    if (mailer.HasViewName)
+                    {
+                        var emailContent = mailer.Model.GetHtmlEmailContent(mailer.ViewFile);
+                        messageBody = Regex.Replace(messageBody, @"(?<![\w]){EMAILCONTENT}(?![\w])", emailContent ?? "");
+                    }
+                    else
+                    {
+                        var emailContent = mailer.Model.GetTextEmailContent(mailer.Message);
+                        messageBody = string.IsNullOrWhiteSpace(messageBody) == false ? Regex.Replace(messageBody, @"(?<![\w]){EMAILCONTENT}(?![\w])", emailContent ?? "") : emailContent;
+                    }
+                }
+                else
+                {
+                    var emailContent = mailer.Model.GetTextEmailContent(mailer.Message);
+                    messageBody = string.IsNullOrWhiteSpace(messageBody) == false ? Regex.Replace(messageBody, @"(?<![\w]){EMAILCONTENT}(?![\w])", emailContent ?? "") : emailContent;
                 }
                 var emailMessage =
                     new MailMessage()

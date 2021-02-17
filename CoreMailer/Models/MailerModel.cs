@@ -80,6 +80,19 @@ namespace CoreMailer.Models
             ReplyTo = new List<string>();
             CC = new List<string>();
             BCC = new List<string>();
+            Host = "localhost";
+            Port = 80;
+        }
+
+        public MailerModel()
+        {
+            ToAddresses = new List<string>();
+            Attachments = new List<Attachment>();
+            ReplyTo = new List<string>();
+            CC = new List<string>();
+            BCC = new List<string>();
+            Host = "localhost";
+            Port = 80;
         }
         public bool IsValid()
         {
