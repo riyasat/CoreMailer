@@ -59,7 +59,7 @@ in the controller use following:
 
 **ActionMethod**
 
-*HTML Content With Layou and Pickupdirectory*
+*HTML Content With Layout and Pickupdirectory*
 
     public IActionResult Index()
         {
@@ -80,7 +80,7 @@ in the controller use following:
             _coreMailer.Send(mdl);
       }  
 
-*Text Content With Layou and Pickupdirectory*
+*Text Content With Layout and Pickupdirectory*
 
     public IActionResult Index()
     {
